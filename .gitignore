@@ -60,6 +60,9 @@ db.sqlite3
 instance/
 .webassets-cache
 
+# Whoosh stuff:
+whoosh_index/
+
 # Scrapy stuff:
 .scrapy
 

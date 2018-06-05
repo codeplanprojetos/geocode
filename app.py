@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import flask_whooshalchemyplus as fwap
 from os import environ, path
 from flask import Flask
 from flask_restful import Api
 from flask_compress import Compress
+from flask_cors import CORS
 from ambiente import whoosh_base, static_folder, geocode_db
 from localizacao import localizacao
 from whoosh.analysis import StemmingAnalyzer
@@ -15,6 +15,7 @@ def create_app():
     app.config.from_pyfile('./config/geocode.cfg')
     app.config['SQLALCHEMY_DATABASE_URI'] = geocode_db
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    CORS(app)
     Compress(app)
     print("app criado.")
 
@@ -31,12 +32,4 @@ def create_app():
 
     return app
 
-
-def formatar_geojson(itens):
-    features = []
-
-    for item in itens:
-        features.append({'geometry': {'type': 'Point', 'coordinates': item[1]}, 'properties': {'nome': item[0]}, 'type': 'Feature'})
-
-    return {'type': 'FeatureCollection', 'features': features}
 
