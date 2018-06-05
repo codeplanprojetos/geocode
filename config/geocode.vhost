@@ -1,0 +1,18 @@
+WSGIPythonPath $GEOCODE_DIR
+<VirtualHost *:80>
+        ServerAdmin $GEOCODE_ADMIN
+        ServerName $GEOCODE_SERVER
+
+        DocumentRoot /var/www/geocode
+        ErrorLog $GEOCODE_DIR/logs/error.log
+        CustomLog $GEOCODE_DIR/logs/access.log combined
+
+        WSGIDaemonProcess geocode processes=2 threads=8 display-name=geocode home=$GEOCODE_DIR
+        <Directory />
+            AuthType None
+            Allow from all
+        </Directory>
+
+        WSGIScriptAlias / $GEOCODE_DIR/geocode
+        WSGIProcessGroup geocode
+</VirtualHost>

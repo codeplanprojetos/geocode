@@ -49,17 +49,9 @@ modelos_padroes = [Ponto, Poligono, Linha]
 
 def apagar_base():
     print("Apagando a base...")
-    rmtree(whoosh_base)
 
-
-def criar_base():
-    indices = []
-
-    for modelo in modelos_padroes:
-        indice = index.create_in(whoosh_base, schema = schema, indexname = modelo.__tablename__)
-        indices.append(indice)
-
-    return indices
+    if path.exists(whoosh_base):
+        rmtree(whoosh_base)
 
 
 def wkb2ponto(geometry):
@@ -68,6 +60,7 @@ def wkb2ponto(geometry):
 
 
 def popular_base():
+    print("Populando base...")
     sessao = criar_sessao()
     total = 0
 
@@ -85,17 +78,30 @@ def popular_base():
     print("Fim da inserção de índices com %d registros." % total)
 
 
+def criar_base():
+    print("Criando base...")
+
+    if not path.exists(whoosh_base):
+        mkdir(whoosh_base)
+
+    indices = []
+
+    for modelo in modelos_padroes:
+        indice = index.create_in(whoosh_base, schema = schema, indexname = modelo.__tablename__)
+        indices.append(indice)
+
+    print("Criando base... OK")
+    popular_base()
+
+    return indices
+
+
 def carregar_base():
     print("Carregando base...")
     indices = []
 
-    if not path.exists(whoosh_base):
-        mkdir(whoosh_base)
-        indices = criar_base()
-        popular_base()
-    else:
-        for modelo in modelos_padroes:
-            indices.append(index.open_dir(whoosh_base, schema = schema, indexname = modelo.__tablename__))
+    for modelo in modelos_padroes:
+        indices.append(index.open_dir(whoosh_base, schema = schema, indexname = modelo.__tablename__))
 
     print("Carregando base... OK")
     return indices
