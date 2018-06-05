@@ -26,7 +26,7 @@ class Localizacao(Resource):
     def get(self):
         print("Localizacao.get chamado...")
         args = Localizacao.parser.parse_args()
-        localidade = args['localidade']
+        localidade = args['localidade'] or ''
         limite = args['limite']
 
         return formatar_geojson(buscar(localidade, limite))

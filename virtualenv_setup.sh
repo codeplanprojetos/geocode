@@ -1,3 +1,3 @@
 #!/bin/sh
 
-virtualenv -p /usr/bin/python3 flask
+virtualenv -p /usr/bin/python3 venv
