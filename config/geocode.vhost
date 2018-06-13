@@ -13,6 +13,6 @@ WSGIPythonPath $GEOCODE_DIR
             Allow from all
         </Directory>
 
-        WSGIScriptAlias / $GEOCODE_DIR/geocode.wsgi
+        WSGIScriptAlias / $GEOCODE_DIR/geocode
         WSGIProcessGroup geocode
 </VirtualHost>

@@ -1,4 +1,4 @@
-from configparser import ConfigParser
+from ConfigParser import ConfigParser
 from os import path
 from os import environ
 
@@ -6,8 +6,8 @@ if path.exists('./config/wsgi.cfg'):
     config = ConfigParser()
     config.read('./config/wsgi.cfg')
 
-    for key in config['env']:
-        environ[key.upper()] = config['env'][key]
+    for key in config.options('env'):
+        environ[key.upper()] = config.get('env', key)
 
 activate_this = path.join(environ['GEOCODE_DIR'], 'venv/bin/activate_this.py')
 with open(activate_this) as file_:
