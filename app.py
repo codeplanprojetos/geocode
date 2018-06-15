@@ -8,6 +8,7 @@ from flask_cors import CORS
 from ambiente import whoosh_base, static_folder, geocode_db
 from localizacao import localizacao
 from whoosh.analysis import StemmingAnalyzer
+from whoosh.index import EmptyIndexError
 
 
 def create_app():
@@ -23,8 +24,11 @@ def create_app():
     db.init_app(app)
 
     from modelos import carregar_base
-    carregar_base()
-    print("base indexada.")
+    try:
+        carregar_base()
+        print("base indexada.")
+    except EmptyIndexError:
+        pass
 
     api = Api(app)
     localizacao(api)
