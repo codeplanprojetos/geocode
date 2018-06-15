@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python2 geocode.wsgi
+python2 geocode
