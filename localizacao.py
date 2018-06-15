@@ -7,6 +7,7 @@ from sys import exc_info
 
 from buscas import buscar
 from formatacao import formatar_geojson
+from whoosh.index import EmptyIndexError
 
 
 def localizacao(api):
@@ -29,4 +30,7 @@ class Localizacao(Resource):
         localidade = args['localidade'] or ''
         limite = args['limite']
 
-        return formatar_geojson(buscar(localidade, limite))
+        try:
+            return formatar_geojson(buscar(localidade, limite))
+        except EmptyIndexError:
+            return {'code': 1, 'message': 'índice do whoosh não inicializado. Execute o rebuild.sh em linha de comando.'}, 500
