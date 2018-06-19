@@ -97,13 +97,11 @@ def criar_base():
 
 
 def carregar_base():
-    print("Carregando base...")
     indices = []
 
     for modelo in modelos_padroes:
         indices.append(index.open_dir(whoosh_base, schema = schema, indexname = modelo.__tablename__))
 
-    print("Carregando base... OK")
     return indices
 
 
