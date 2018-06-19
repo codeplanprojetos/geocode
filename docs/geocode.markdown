@@ -6,10 +6,10 @@ A GEOCODE API oferece resultados mais rápidos de busca em relação a solução
 
 ### Operadores lógicos
 
-O parâmetro localidade aceita operadores lógicos como `OR` (ou lógico) e `AND` (e lógico).
+O parâmetro localidade aceita operadores lógicos como `OR` (ou lógico), `AND` (e lógico) e agrupamento com parênteses.
 
 ```
-?localidade=unb OR universidade
+?localidade=unb OR (universidade AND brasilia)
 ```
 
 Se o operador não for especificado, o GEOCODE API considera como se o operador `AND` estivesse interligando os termos:
