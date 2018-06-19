@@ -1,3 +1,2 @@
 #!/bin/bash
-
-python2 geocode
+python3 geocode --rebuild
