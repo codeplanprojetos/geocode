@@ -32,7 +32,7 @@ Por padrão o GEOCODE API aceita que você realize buscas em que os termos não 
 ?localidade=mano~1
 ```
 
-O número depois do til (~) indica a distância de [Damerau-Levenshtein][6] usada na busca. Ou seja, quantas alterações do tipo inserção, deleção ou transposição podem existir entre o termo usado e o termo encontrado. Quanto maior este valor, mais lenta deverá ser a busca, portanto é melhor não usar um valor maior do que 2. Não especificar valor nenhum equivale à distância de valor 1.
+O número depois do til (~) indica a distância de [Damerau-Levenshtein][6] usada na busca e é opcional. Ou seja, ele define quantas alterações do tipo inserção, deleção ou transposição podem existir entre o termo usado e o termo encontrado. Quanto maior este valor, mais lenta deverá ser a busca, portanto é melhor não usar um valor maior do que 2. Não especificar valor nenhum equivale à distância de valor 1.
 
 
 Referências
