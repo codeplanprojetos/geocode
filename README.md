@@ -9,7 +9,6 @@ Servidor WSGI Python com Flask e Whoosh para acessar serviço de geolocalizaçã
 * Python 3.x
 * Flask
 * Pypi
-* Whoosh
 * Virtualenv
 
 ### Debian e derivados
@@ -18,7 +17,7 @@ Se você estiver usando Debian/Ubuntu ou derivados, você pode instalar as depen
 
 ```
 sudo apt-get update
-sudo apt-get install apache2 apache2-dev python3 python3-pip libapache2-mod-wsgi-py3
+sudo apt-get install apache2 apache2-dev python3 python3-pip libapache2-mod-wsgi-py3 python-virtualenv
 ```
 
 Se você estiver usando uma versão muito velha do apache2, talvez seja necessário atualizar o mod_wsgi para apontar para o Python 3 ao invés do Python 2:
