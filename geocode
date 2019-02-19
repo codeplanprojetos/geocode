@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+
 from ConfigParser import ConfigParser
 from os import path
 from os import environ
@@ -22,21 +23,32 @@ with open(activate_this) as file_:
 # Apaga base se executar da linha de comando.
 if __name__ == '__main__':
     import click
+
     @click.command(name = 'geocode', add_help_option = False)
+    @click.option('--arquivo', type=str, help = 'Executa em modo terminal com o arquivo especificado.')
+    @click.option('--delimitador', default=';', help = 'Determina o limitador no arquivo CSV (modo terminal).')
+    @click.option('--campos', default='*', help = 'Determina os campos do arquivo CSV a serem usados (modo terminal).')
     @click.option('--rebuild', is_flag = True, help = 'Reconstroi base de dados de busca.')
     @click.option('--server', is_flag = True, help = 'Executa servidor em modo DEBUG.')
-    def comando(rebuild, server):
+    def comando(arquivo, delimitador, campos, rebuild, server):
         """Executar o GEOCODE em linha de comando para realizar diversas funções."""
-        if rebuild or server:
-            if rebuild:
-                from modelos import apagar_base, criar_base
-                apagar_base()
-                criar_base()
-            if server:
-                click.echo('Iniciando servidor localmente em modo DEBUG...')
-                from app import create_app
-                app = create_app()
-                app.run(debug = True)
+        if arquivo:
+            import terminal
+            delimitador_ = delimitador if not delimitador is None else ';';
+            campos_ = campos if not campos is None else '*';
+            terminal.run(arquivo, delimitador_, campos_)
+
+        if rebuild:
+            from modelos import apagar_base, criar_base
+            apagar_base()
+            criar_base()
+
+        elif server:
+            click.echo('Iniciando servidor localmente em modo DEBUG...')
+            from app import create_app
+            app = create_app()
+            app.run(debug = True)
+
         else:
             click.echo(click.get_current_context().get_help())
 

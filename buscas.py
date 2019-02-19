@@ -7,7 +7,7 @@ from json import loads
 from modelos import schema, carregar_base, modelos_padroes, criar_sessao
 
 
-def criar_parser():
+def _criar_parser():
     parser = QueryParser('nome', schema)
     parser.add_plugin(FuzzyTermPlugin())
     return parser
@@ -16,7 +16,7 @@ def criar_parser():
 def buscar(nome, limite = None, modelos = modelos_padroes):
     indices = carregar_base()
     session = criar_sessao()
-    parser = criar_parser()
+    parser = _criar_parser()
     expressao = parser.parse(nome)
     resultados = []
     
