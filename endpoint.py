@@ -10,13 +10,13 @@ from formatacao import formatar_geojson
 from whoosh.index import EmptyIndexError
 
 
-def localizacao(api):
+def root(api):
     print("Adicionando recurso /...")
-    api.add_resource(Localizacao, '/')
+    api.add_resource(Root, '/')
 
 
 # Caminho padrão
-class Localizacao(Resource):
+class Root(Resource):
     '''
     Endpoint de Localizacao.
     '''
@@ -25,8 +25,7 @@ class Localizacao(Resource):
     parser.add_argument('limite')
 
     def get(self):
-        print("Localizacao.get chamado...")
-        args = Localizacao.parser.parse_args()
+        args = Root.parser.parse_args()
         localidade = args['localidade'] or ''
         limite = args['limite']
 

@@ -6,7 +6,7 @@ from flask_restful import Api
 from flask_compress import Compress
 from flask_cors import CORS
 from ambiente import whoosh_base, static_folder, geocode_db
-from localizacao import localizacao
+from endpoint import root
 from whoosh.analysis import StemmingAnalyzer
 from whoosh.index import EmptyIndexError
 
@@ -31,8 +31,8 @@ def create_app():
         pass
 
     api = Api(app)
-    localizacao(api)
-    print("endpoint de localizacao criado.")
+    root(api)
+    print("endpoint criado.")
 
     return app
 
