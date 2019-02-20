@@ -20,7 +20,6 @@ class Root(Resource):
     '''
     Endpoint de Localizacao.
     '''
-    sys.setdefaultencoding('utf8')
     parser = reqparse.RequestParser()
     parser.add_argument('localidade')
     parser.add_argument('limite')
