@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from os import environ, sep, path
+from os import environ, sep, path, getcwd
 
 class UndefinedEnvVarError(Exception):
     '''
@@ -31,11 +31,11 @@ if 'GEOCODE_WHOOSHDIR' in environ.keys():
     if environ['GEOCODE_WHOOSHDIR'].startswith(sep):
         whoosh_base = environ['WHOOSH_BASE']
     else:
-        whoosh_base = path.join(app_base, environ['GEOCODE_WHOOSHDIR'])
+        whoosh_base = path.join(getcwd(), environ['GEOCODE_WHOOSHDIR'])
 else:
-    whoosh_base = path.join(app_base, 'whoosh_index')
+    whoosh_base = path.join(getcwd(), 'whoosh_index')
 
-static_folder = path.join(app_base, environ.get('GEOCODE_STATICDIR', 'static'))
+static_folder = path.join(getcwd(), environ.get('GEOCODE_STATICDIR', 'static'))
 
 #if 'GEOCODE_ANALYZER' in environ.keys():
 #    whoosh_analyzer = environ['GEOCODE_ANALYZER']
