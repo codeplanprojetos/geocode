@@ -1,5 +1,8 @@
 #!/bin/bash
 
+GEOCODE_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd $GEOCODE_DIR
+
 abort_on_error()
 {
     if [ $? -ne 0 ]; then
@@ -24,11 +27,6 @@ if [ "X$GEOCODE_SERVER" == 'X$GEOCODE_SERVER' ]; then
     GEOCODE_SERVER="127.0.0.1"
 fi
 
-GEOCODE_DIR="$(echo "$VHOST_CONTENTS" | grep "WSGIPythonPath" | sed "s/^WSGIPythonPath\s*//")"
-if [ "X$GEOCODE_DIR" == 'X$GEOCODE_DIR' ]; then
-    GEOCODE_DIR="/var/www/geocode"
-fi
-
 GEOCODE_DBCONN="$(echo "$CFG_CONTENTS" | grep "GEOCODE_DBCONN" | sed "s/^GEOCODE_DBCONN\s*=\s*//")"
 if [ "X$GEOCODE_DBCONN" == "X" ]; then
     GEOCODE_DBCONN="postgresql+psycopg2://<LOGIN>:<PASSWORD>@<IP_ADDRESS>:<PORT>/<DB_NAME>"
@@ -47,12 +45,7 @@ if [ "X$USER_GEOCODE_SERVER" != "X" ]; then
     GEOCODE_SERVER=$USER_GEOCODE_SERVER
 fi
 
-read -p "Defina o caminho absoluto da pasta onde o Geocode está hospedado [padrão: $GEOCODE_DIR]: " USER_GEOCODE_DIR
-if [ "X$USER_GEOCODE_DIR" != "X" ]; then
-    GEOCODE_DIR=$USER_GEOCODE_DIR
-fi
-
-cat << EOF > $GEOCODE_DIR/config/$VHOST_FILE
+cat << EOF > ./config/$VHOST_FILE
 WSGIPythonPath $GEOCODE_DIR
 <VirtualHost *:80>
         ServerAdmin $GEOCODE_ADMIN
@@ -94,12 +87,12 @@ if [ -e $VHOST_PATH ]; then
         USER_INPUT="$(echo $USER_INPUT | tr SN sn)"
 
         if [ "X$USER_INPUT" == 'Xs' ]; then
-            cp "$GEOCODE_DIR/config/$VHOST_FILE" $VHOST_PATH
+            cp "./config/$VHOST_FILE" $VHOST_PATH
 	    abort_on_error
         fi
     done
 else
-    cp "$GEOCODE_DIR/config/$VHOST_FILE" $VHOST_PATH
+    cp "./config/$VHOST_FILE" $VHOST_PATH
     abort_on_error
 fi
 
@@ -130,9 +123,8 @@ if [ "X$USER_GEOCODE_DBCONN" != "X" ]; then
 fi
 
 # Reescreve arquivo de configuração
-cat << EOF > $GEOCODE_DIR/config/$CFG_FILE
+cat << EOF > ./config/$CFG_FILE
 [env]
-GEOCODE_DIR = $GEOCODE_DIR
 GEOCODE_DBCONN = $GEOCODE_DBCONN
 EOF
 

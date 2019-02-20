@@ -22,14 +22,6 @@ class RelativePathTypeError(Exception):
 # Verifica variáveis de ambiente obrigatórias.
 #
 
-if 'GEOCODE_DIR' in environ.keys():
-    if environ['GEOCODE_DIR'].startswith(sep):
-        app_base = environ['GEOCODE_DIR']
-    else:
-        raise RelativePathTypeError(environ['GEOCODE_DIR'])
-else:
-    raise UndefinedEnvVarError('GEOCODE_DIR')
-
 if 'GEOCODE_DBCONN' in environ.keys():
     geocode_db = environ['GEOCODE_DBCONN']
 else:

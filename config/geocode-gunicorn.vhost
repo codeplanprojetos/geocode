@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+
+        ServerAdmin $GEOCODE_ADMIN
+        ServerName $GEOCODE_SERVER
+
+        DocumentRoot /var/www/geocode
+        ErrorLog $GEOCODE_DIR/logs/error.log
+        CustomLog $GEOCODE_DIR/logs/access.log combined
+
+        ProxyPass /static/ !
+        ProxyPass / http://localhost:8000/
+
+        <Directory />
+            AuthType None
+            Allow from all
+        </Directory>
+
+</VirtualHost>
