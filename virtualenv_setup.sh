@@ -1,3 +1,3 @@
 #!/bin/sh
 
-virtualenv -p /usr/bin/python2 venv
+virtualenv -p /usr/bin/python3 venv
