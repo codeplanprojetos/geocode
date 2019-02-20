@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from ConfigParser import ConfigParser
-from os import path, environ, getcwd
+from configparser import ConfigParser
+from os import path, environ, getcwd, chdir
 
 
 # Altera para diretório de trabalho
-os.chdir(path.dirname(path.realpath(__file__)))
+chdir(path.dirname(path.realpath(__file__)))
 
 if path.exists('./config/wsgi.cfg'):
     config = ConfigParser()
@@ -21,10 +21,11 @@ import sys
 sys.path.insert(0, path.dirname(path.realpath(__file__)))
 
 
-# Carregar ambiente virtual
-activate_this = path.join(os.getcwd(), './venv/bin/activate_this.py')
-with open(activate_this) as file_:
-    exec(file_.read(), dict(__file__ = activate_this))
+# Carregar ambiente virtual se disponível.
+if path.exists('./venv'):
+    activate_this = path.join(getcwd(), './venv/bin/activate_this.py')
+    with open(activate_this) as file_:
+        exec(file_.read(), dict(__file__ = activate_this))
 
 
 # Apaga base se executar da linha de comando.
