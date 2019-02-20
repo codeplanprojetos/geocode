@@ -1,3 +1,2 @@
 [env]
-GEOCODE_DIR = /var/www/geocode
 GEOCODE_DBCONN = postgresql+psycopg2://LOGIN:PASSWORD@0.0.0.0:PORT/DB
