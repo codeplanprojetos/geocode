@@ -1,14 +1,9 @@
 ﻿# -*- coding: UTF-8 -*-
 import csv, uuid, os, zipfile, string, platform
-from logger import StdoutLogger as Logger
+
 
 label_key = 'KEY'
 _encoding = 'latin-1' if platform.system() == 'Windows' else 'utf-8'
-
-
-# Envia mensagem de log para saída padrão.
-if 'DEBUG' in os.environ:
-    from logger import StdoutLogger as Logger
 
 
 def formata_nome_arquivo(nome_arquivo):
@@ -37,11 +32,11 @@ def lista_colunas_e_dados(arquivo_original, delimitador):
         Logger.debug('prep_files: linhas = %i.' % len(linhas))
         return linhas, headers_arquivo
 
-    except (IOError, TypeError, csv.Error) as e:
-        Logger.error('prep_files: Erro ao manipular arquivo original: %s' % e)
+    except (IOError, TypeError) as e:
+        print('arquivo: Erro ao manipular arquivo original: %s' % e)
         raise e
     except Exception as e:
-        Logger.error('prep_files: Verifique o arquivo csv de entrada: %s' % e)
+        print('arquivo: Verifique o arquivo csv de entrada: %s' % e)
         raise e
 
 

@@ -2,12 +2,9 @@
 
 from json import loads, dumps
 import re, string, sys, os
-import urllib.request
-import urllib.parse
 from difflib import SequenceMatcher
 from operator import itemgetter
 from unicodedata import normalize
-from logger import StdoutLogger as Logger
 from buscas import buscar
 from formatacao import formatar_geojson
 
@@ -20,10 +17,6 @@ OK, FAIL, INTERRUPTED = 0, -1, -2
 class ThreadInterrompidaError(Exception):
     pass
 
-
-# Envia mensagem de log para saída padrão.
-if 'DEBUG' in os.environ:
-    from logger import StdoutLogger as Logger
 
 def gera_lista_final(dct_pesquisa, atualiza_progresso=lambda: True):
     '''
@@ -117,24 +110,6 @@ def _reduz_dado(dado):
 
 def _consultar_local(local, geocode_service):
     return formatar_geojson(buscar(local, 33))
-
-
-def _consultar_api(local, geocode_service):
-    '''
-    Recebe a descrição de um local e faz a pesquisa do mesmo na API de geocodificação
-    '''
-    try:
-        consulta = geocode_service + '/?{0}' if geocode_service[-1] != '/' else geocode_service + '?{0}'
-        parametros = urllib.parse.urlencode({'localidade': local, 'limite': '33'})
-        url = consulta.format(parametros)
-        Logger.debug('prep_geocode: %s' % url)
-        result = urllib.request.urlopen(url)
-        result_set = result.read()
-
-        return loads(result_set.decode('utf-8'))
-
-    except Exception as e:
-        Logger.error('prep_geocode: Erro ao consultar API de geocodificação: %s' % e)
 
 
 def testa_conexao(geocode_service):
