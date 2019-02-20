@@ -3,7 +3,6 @@ import csv, uuid, os, zipfile, string, platform
 
 
 label_key = 'KEY'
-_encoding = 'latin-1' if platform.system() == 'Windows' else 'utf-8'
 
 
 def formata_nome_arquivo(nome_arquivo):
@@ -13,12 +12,12 @@ def formata_nome_arquivo(nome_arquivo):
     return nome_arquivo.replace('file:%s%s' % (os.sep, os.sep), '')
 
 
-def lista_colunas_e_dados(arquivo_original, delimitador):
+def lista_colunas_e_dados(arquivo_original, delimitador, encoding='utf-8'):
     '''
     Abre arquivo csv original e adiciona uma chave única a cada registro. Retorna lista de registros (cada registro é um dicionário) e lista com elementos do cabeçalho do arquivo original.
     '''
     try:
-        with open(arquivo_original, encoding=_encoding) as arquivo:
+        with open(arquivo_original, encoding=encoding) as arquivo:
             dict_reader = csv.DictReader(arquivo, delimiter=str(delimitador))
             # dict_reader = csv.DictReader(arquivo, delimiter=str(delimitador), dialect='excel')
             headers_arquivo = dict_reader.fieldnames
@@ -107,7 +106,7 @@ def _troca_verbetes(dado):
     return ' '.join(s)
 
 
-def gera_arquivo(lista_final, prefixo, dir_arquivo, labels):
+def gera_arquivo(lista_final, prefixo, dir_arquivo, labels, encoding='utf-8'):
     '''
     Recebe lista final e lista de argumentos da execução (nome do arquivo original e colunas a serem manipuladas) e grava novo arquivo .csv
     '''
@@ -120,7 +119,7 @@ def gera_arquivo(lista_final, prefixo, dir_arquivo, labels):
 
         novo_arquivo = os.path.join(diretorio, '%s_%s' % (prefixo, arquivo))
 
-        with open(novo_arquivo, 'w', encoding=_encoding) as saida:
+        with open(novo_arquivo, 'w', encoding=encoding) as saida:
 
             if label_key not in labels:
                 labels.insert(0, label_key)

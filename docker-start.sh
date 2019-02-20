@@ -1,4 +1,4 @@
 #!/bin/sh
 
-docker build . -t geocode-img
-docker run -it --name geocode-cnr --net=rede_paineis --ip=172.18.0.8 geocode-img
+docker build . -t geocodeapi
+docker run -it --name srvgeocodeapi --net=rede_paineis --ip=172.18.0.8 geocodeapi
