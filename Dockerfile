@@ -14,4 +14,4 @@ RUN cd /var/www/geocode && pip3 install -r requirements.txt
 RUN export LC_ALL=C.UTF-8
 RUN ./geocode --rebuild
 
-ENTRYPOINT cd /var/www/geocode && gunicorn geocode -b 0.0.0.0:80 --pid /tmp/gunicorn.pid --workers=4 --access-logfile /var/www/geocode/logs/access.log --error-logfile /var/www/geocode/logs/error.log
+ENTRYPOINT cd /var/www/geocode && gunicorn geocode -b 0.0.0.0:80 --pid /tmp/gunicorn.pid --access-logfile /var/www/geocode/logs/access.log --error-logfile /var/www/geocode/logs/error.log
