@@ -48,17 +48,17 @@ def gera_lista_final(dct_pesquisa, atualiza_progresso=lambda: True):
             if not atualiza_progresso(ct):
                 raise ThreadInterrompidaError()
             else:
-                Logger.debug('prep_geocode: {0} de {1}'.format(ct, total))
+                print('prep_geocode: {0} de {1}'.format(ct, total))
                 ct += 1
 
         return dados_finais
 
     except ThreadInterrompidaError as e:
-        Logger.error('prep_geocode: interrupção por usuário foi detectada: %s' % e)
+        print('prep_geocode: interrupção por usuário foi detectada: %s' % e)
         raise e
 
     except Exception as e:
-        Logger.error('prep_geocode: Erro ao gerar lista final: %s' % e)
+        print('prep_geocode: Erro ao gerar lista final: %s' % e)
 
 
 def _consultar_geocode(string_pesquisa, coluna, geocode_service):
@@ -88,7 +88,7 @@ def _consultar_geocode(string_pesquisa, coluna, geocode_service):
         return dct
 
     except Exception as e:
-        Logger.error('prep_geocode: Erro ao montar novo registro: %s' % e)
+        print('prep_geocode: Erro ao montar novo registro: %s' % e)
 
 
 
@@ -123,7 +123,7 @@ def testa_conexao(geocode_service):
         http_code = result.code
         return OK, http_code, result.read()
     except Exception as e:
-        Logger.error('prep_geocode: Erro ao consultar API de geocodificação: %s' % e)
+        print('prep_geocode: Erro ao consultar API de geocodificação: %s' % e)
         return FAIL, 0, '%s' % e
 
 
@@ -164,7 +164,7 @@ def _avaliar_resultado(dado_busca, geojson):
             return resultado
 
     except Exception as e:
-        Logger.error('prep_geocode: Erro ao gerar lista final: %s' % e)
+        print('prep_geocode: Erro ao gerar lista final: %s' % e)
 
 
 def _remove_acentos(txt):

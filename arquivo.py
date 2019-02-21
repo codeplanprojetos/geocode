@@ -29,7 +29,7 @@ def lista_colunas_e_dados(arquivo_original, delimitador, encoding='utf-8'):
                     l[label_key] = str(key)
                     linhas.append(l)
         
-        Logger.debug('prep_files: linhas = %i.' % len(linhas))
+        print('arquivo: linhas = %i.' % len(linhas))
         return linhas, headers_arquivo
 
     except (IOError, TypeError) as e:
@@ -55,7 +55,7 @@ def prepara_dados(dados, campos_selecionados):
             dados_pesquisa.append(dct)
         return dados_pesquisa
     except Exception as e:
-        Logger.error('prep_files: Erro ao preparar dados para geocodificação: %s' % e)
+        print('arquivo: Erro ao preparar dados para geocodificação: %s' % e)
 
 
 def padroniza_dados(dados):
@@ -72,7 +72,7 @@ def padroniza_dados(dados):
                 d[k] = _troca_verbetes(valor)
         return dados
     except Exception as e:
-        Logger.error('prep_files: Erro ao padronizar dados para geocodificação: %s' % e)
+        print('arquivo: Erro ao padronizar dados para geocodificação: %s' % e)
 
 
 def _troca_verbetes(dado):
@@ -131,17 +131,17 @@ def gera_arquivo(lista_final, prefixo, dir_arquivo, labels, encoding='utf-8'):
             for linha in lista_final:
                 dict_writer.writerow(linha)
                 
-        Logger.debug('prep_files: Arquivo %s_%s criado.' % (prefixo, arquivo))
+        print('arquivo: Arquivo %s_%s criado.' % (prefixo, arquivo))
     except (IOError, TypeError, csv.Error) as e:
-        Logger.error('prep_files: Erro ao criar arquivo: %s' % e)
+        print('arquivo: Erro ao criar arquivo: %s' % e)
 
 
 def identifica_diretorio(caminho_completo):
     try:
         arquivo = os.path.basename(caminho_completo)
         diretorio = os.path.dirname(caminho_completo)
-        Logger.debug("prep_geocode: %s, %s" % (diretorio, arquivo))
+        print("arquivo: %s, %s" % (diretorio, arquivo))
         return diretorio, arquivo
     except Exception as e:
-        Logger.error('Erro ao manipular o diretório: %s' % e)
+        print('Erro ao manipular o diretório: %s' % e)
 

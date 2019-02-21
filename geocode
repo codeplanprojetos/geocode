@@ -45,6 +45,7 @@ if __name__ == '__main__':
             delimitador_ = delimitador if not delimitador is None else ';';
             campos_ = campos if not campos is None else '*';
             terminal.run(arquivo, delimitador_, campos_)
+            click.get_current_context().exit()
 
         if rebuild:
             from modelos import apagar_base, criar_base
