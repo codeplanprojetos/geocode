@@ -1,3 +1,2 @@
 #!/bin/sh
-cd /var/www/geocode
-pip3 install -r requirements.txt
+pip3 install -r /var/www/geocode/requirements.txt
