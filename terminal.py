@@ -8,16 +8,16 @@ def _atualiza_progresso(valor):
     print("\r%d localizações processadas..." % valor)
 
 
-def run(arquivo, delimitador, campos):
-    dados_arquivo_original, colunas_disponiveis = arquivo.lista_colunas_e_dados(arquivo, delimitador)
-    tamanho = len(self._dados_arquivo_original)
+def run(nome_arquivo, delimitador, campos):
+    dados_arquivo_original, colunas_disponiveis = arquivo.lista_colunas_e_dados(nome_arquivo, delimitador)
+    tamanho = len(dados_arquivo_original)
 
     if campos == '*':
         colunas_escolhidas = colunas_disponiveis
     else:
         colunas_escolhidas = campos.split(',')
 
-    colunas = self._colunas_escolhidas[:]
+    colunas = colunas_escolhidas[:]
     dados_preparados = arquivo.prepara_dados(dados_arquivo_original, colunas)
     dados_padronizados = arquivo.padroniza_dados(dados_preparados)
     arquivo.gera_arquivo(dados_arquivo_original, 'original', arquivo, colunas_disponiveis)
@@ -31,7 +31,7 @@ def run(arquivo, delimitador, campos):
         val += 1
         dct_pesquisa = {'prioridade': colunas, 'dados': v, 'geocode_service': None}
         lista_final = prep_geocode2.gera_lista_final(dct_pesquisa, _atualiza_progresso)
-        arquivo.gera_arquivo(lista_final, 'geocode' + str(val), self._arquivo, labels_arquivo_geocode)
+        arquivo.gera_arquivo(lista_final, 'geocode' + str(val), nome_arquivo, labels_arquivo_geocode)
 
     diretorio, arquivo_saida = arquivo.identifica_diretorio(arquivo)
     print(' * Diretório de saída: ', diretorio)
